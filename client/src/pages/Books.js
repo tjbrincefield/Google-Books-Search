@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import Jumbotron from "../../components/Jumbotron";
-import DeleteBtn from "../../components/DeleteBtn";
-import API from "../../utils/API";
-import { Col, Row, Container } from "../../components/Grid";
-import { List, ListItem } from "../../components/List";
-import { Input, TextArea, FormBtn } from "../../components/Form";
+import Jumbotron from "../components/Jumbotron";
+import DeleteBtn from "../components/DeleteBtn";
+import API from "../utils/API";
+import { Col, Row, Container } from "../components/Grid";
+import { List, ListItem } from "../components/List";
+import { Input, TextArea, FormBtn } from "../components/Form";
 
 class Books extends Component {
-  // Setting our component's initial state
   state = {
     books: [],
     title: "",
@@ -15,12 +14,10 @@ class Books extends Component {
     synopsis: ""
   };
 
-  // When the component mounts, load all books and save them to this.state.books
   componentDidMount() {
     this.loadBooks();
   }
 
-  // Loads all books  and sets them to this.state.books
   loadBooks = () => {
     API.getBooks()
       .then(res =>
@@ -29,14 +26,12 @@ class Books extends Component {
       .catch(err => console.log(err));
   };
 
-  // Deletes a book from the database with a given id, then reloads books from the db
   deleteBook = id => {
     API.deleteBook(id)
       .then(res => this.loadBooks())
       .catch(err => console.log(err));
   };
 
-  // Handles updating component state when the user types into the input field
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -44,8 +39,6 @@ class Books extends Component {
     });
   };
 
-  // When the form is submitted, use the API.saveBook method to save the book data
-  // Then reload books from the database
   handleFormSubmit = event => {
     event.preventDefault();
     if (this.state.title && this.state.author) {
@@ -59,6 +52,7 @@ class Books extends Component {
     }
   };
 
+
   render() {
     return (
       <Container fluid>
@@ -68,7 +62,7 @@ class Books extends Component {
               <h1>What Books Should I Read?</h1>
             </Jumbotron>
             <form>
-              <Input
+            <Input
                 value={this.state.title}
                 onChange={this.handleInputChange}
                 name="title"
